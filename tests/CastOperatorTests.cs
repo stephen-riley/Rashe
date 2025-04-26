@@ -38,7 +38,7 @@ public class CastOperatorTests
     public void PiCast()
     {
         var add = true;
-        var r = Rational.Zero();
+        var r = Rational.Zero;
 
         const int COUNT = 1_000;
 

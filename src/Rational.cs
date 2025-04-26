@@ -11,7 +11,7 @@ public sealed record Rational
     public bool Positive => Num / Denom / Math.Abs(Num / Denom) >= 0;
     public bool Negative => !Positive;
 
-    public static Rational Zero() => From(0, 1);
+    public static Rational Zero => From(0, 1);
 
     public static Rational From(long num, long denom, bool simplify = true)
     {
