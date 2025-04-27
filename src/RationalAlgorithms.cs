@@ -1,6 +1,6 @@
 namespace Rashe;
 
-public sealed partial record Rational
+public partial record Rational
 {
     internal static long Gcd(long a, long b)
     {

@@ -1,6 +1,6 @@
 namespace Rashe;
 
-public sealed partial record Rational
+public partial record Rational
 {
     public static Rational operator +(Rational r) => r;
     public static Rational operator -(Rational r) => r.Negate();

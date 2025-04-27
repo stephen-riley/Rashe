@@ -1,11 +1,4 @@
-# Rashe
-
-A dotnet rational number library that calculates everything by the numerator/denominator ratio.
-
-## Usage
-
-```csharp
-using Rashe;
+﻿using Rashe;
 
 var zero = Rational.Zero;
 var twoThirds = Rational.From(2, 3);
@@ -22,8 +15,3 @@ Console.WriteLine(oneHalf == 0.5); // true
 Console.WriteLine(oneHalf >= 0.5); // true
 Console.WriteLine(oneHalf < 0.5);  // false
 Console.WriteLine(0.5 >= oneHalf); // true
-```
-
-## Motivation
-
-For funsies.  Needed to get it out of my system.

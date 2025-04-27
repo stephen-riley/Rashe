@@ -1,7 +1,4 @@
-using System.Diagnostics;
-using Rashe;
-
-namespace RasheTests;
+namespace Rashe.Tests;
 
 [TestClass]
 public class CastOperatorTests

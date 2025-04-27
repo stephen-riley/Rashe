@@ -2,8 +2,8 @@
 
 public sealed partial record Rational
 {
-    public long Num { get; private set; }
-    public long Denom { get; private set; }
+    public long Num;
+    public long Denom;
 
     public bool Positive => Num / Denom / Math.Abs(Num / Denom) >= 0;
     public bool Negative => !Positive;
@@ -30,13 +30,20 @@ public sealed partial record Rational
         return simplify ? r.Simplify() : r;
     }
 
-    public Rational Add(Rational r, bool simplify = true)
+    public (Rational a, Rational b) CommonDenominators(Rational r)
     {
         var lcm = Lcm(Denom, r.Denom);
         var a = Mul(lcm / Denom, simplify: false);
         var b = r.Mul(lcm / r.Denom, simplify: false);
+        return (a, b);
+    }
+
+    public Rational Add(Rational r, bool simplify = true)
+    {
+        var (a, b) = CommonDenominators(r);
         return From(a.Num + b.Num, a.Denom, simplify);
     }
+
     public Rational Sub(Rational r, bool simplify = true) => Add(r.Negate(simplify), simplify);
 
     public Rational Mul(Rational r, bool simplify = true)
@@ -57,6 +64,28 @@ public sealed partial record Rational
         var gcd = Gcd(Num, Denom);
         return gcd > 1 ? From(Num / gcd, Denom / gcd) : this;
     }
+
+    public bool Equals(Rational? r)
+    {
+        if (r is null) { return false; }
+
+        var (a, b) = CommonDenominators(r);
+        return a.Num == b.Num;
+    }
+
+    public bool GreaterThan(Rational r)
+    {
+        var (a, b) = CommonDenominators(r);
+        return a.Num > b.Num;
+    }
+
+    public bool LessThan(Rational r)
+    {
+        var (a, b) = CommonDenominators(r);
+        return a.Num < b.Num;
+    }
+
+    public override int GetHashCode() => base.GetHashCode();
 
     public override string ToString() => $"R:({Num}/{Denom})";
 }

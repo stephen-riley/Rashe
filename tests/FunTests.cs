@@ -1,7 +1,6 @@
 using System.Diagnostics;
-using Rashe;
 
-namespace RasheTests;
+namespace Rashe.Tests;
 
 [TestClass]
 public class FunTests
@@ -22,7 +21,7 @@ public class FunTests
             add = !add;
 
             // uncomment to get a running estimate
-            Debug.WriteLine($"at {i}: {r} ({(double)r})");
+            // Debug.WriteLine($"at {i}: {r} ({(double)r})");
 
             // due to long overflow of the denominator,
             //  let's convert to double then convert back

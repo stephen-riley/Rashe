@@ -1,6 +1,4 @@
-using Rashe;
-
-namespace RasheTests;
+namespace Rashe.Tests;
 
 [TestClass]
 public class NamedMethodTests
@@ -9,7 +7,7 @@ public class NamedMethodTests
     [DataRow(-2, 5, "R:(-2/5)")]
     [DataRow(2, -5, "R:(-2/5)")]
     [DataRow(-2, -5, "R:(2/5)")]
-    public void ConstructorWithNegativesNormalization(long n, long d, string s)
+    public void ConrecordorWithNegativesNormalization(long n, long d, string s)
     {
         var r = Rational.From(n, d);
         Assert.AreEqual(s, r.ToString());

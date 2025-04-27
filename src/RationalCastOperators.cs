@@ -1,6 +1,6 @@
 namespace Rashe;
 
-public sealed partial record Rational
+public partial record Rational
 {
     // decimal, long, and int are handled through built-in implicit casts to double
 
