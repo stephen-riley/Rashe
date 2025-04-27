@@ -44,7 +44,38 @@ public class NamedMethodTests
     }
 
     [TestMethod]
+    [DataRow(1, 3, 2, 5, 2, 15)]
+    [DataRow(4, 1, 5, 6, 20, 6)]
+    [DataRow(-1, 3, 2, 5, -2, 15)]
+    [DataRow(-4, 1, 5, -6, 20, 6)]
+    public void BasicMul(long na, long da, long nb, long db, long nc, long dc)
+    {
+        var a = Rational.From(na, da, simplify: false);
+        var b = Rational.From(nb, db, simplify: false);
+        var c = a.Mul(b, simplify: false);
+        var expected = Rational.From(nc, dc, simplify: false);
+
+        Assert.AreEqual(expected, c);
+    }
+
+    [TestMethod]
+    [DataRow(1, 3, 2, 5, 5, 6)]
+    [DataRow(4, 1, 5, 6, 24, 5)]
+    [DataRow(-1, 3, 2, 5, -5, 6)]
+    [DataRow(-4, 1, 5, -6, 24, 5)]
+    public void BasicDiv(long na, long da, long nb, long db, long nc, long dc)
+    {
+        var a = Rational.From(na, da, simplify: false);
+        var b = Rational.From(nb, db, simplify: false);
+        var c = a.Div(b, simplify: false);
+        var expected = Rational.From(nc, dc, simplify: false);
+
+        Assert.AreEqual(expected, c);
+    }
+
+    [TestMethod]
     [DataRow(1, 3, -1, 3)]
+    [DataRow(-1, -3, -1, 3)]
     public void Negation(long num, long denom, long xnum, long xdenom)
     {
         var a = Rational.From(num, denom, simplify: false).Negate();

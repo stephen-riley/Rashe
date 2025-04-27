@@ -44,8 +44,8 @@ public sealed partial record Rational
 
     public Rational Mul(long n, bool simplify = true) => From(Num * n, Denom * n, simplify);
 
-    public Rational Div(Rational r)
-        => ToNegativeOne().Mul(r);
+    public Rational Div(Rational r, bool simplify = true)
+        => Mul(r.ToNegativeOne(simplify), simplify);
 
     public Rational ToNegativeOne(bool simplify = true)
         => From(Denom, Num, simplify);
