@@ -95,4 +95,50 @@ public class ArithmeticOperatorTests
         var x = Rational.From(xNum, xDenom);
         Assert.AreEqual(x, c);
     }
+
+    [TestMethod]
+    [DataRow(1, 2, 3)]
+    public void CanCompileBuiltinArithmeticOperators(double aD, double bD, double xD)
+    {
+        var aR = (Rational)aD;
+        var bR = (Rational)bD;
+        var xR = (Rational)xD;
+
+        var aF = (float)aD;
+        var bF = (float)bD;
+
+        var aM = (decimal)aD;
+        var bM = (decimal)bD;
+
+        var aL = (long)aD;
+        var bL = (long)bD;
+
+        var aI = (int)aD;
+        var bI = (int)bD;
+
+        var r = aR + bD;
+        Assert.AreEqual(xR, r);
+        r = aD + bR;
+        Assert.AreEqual(xR, r);
+
+        r = aR + bF;
+        Assert.AreEqual(xR, r);
+        r = aF + bR;
+        Assert.AreEqual(xR, r);
+
+        r = aR + (double)bM;
+        Assert.AreEqual(xR, r);
+        r = (double)aM + bR;
+        Assert.AreEqual(xR, r);
+
+        r = aR + bL;
+        Assert.AreEqual(xR, r);
+        r = aL + bR;
+        Assert.AreEqual(xR, r);
+
+        r = aR + bI;
+        Assert.AreEqual(xR, r);
+        r = aI + bR;
+        Assert.AreEqual(xR, r);
+    }
 }
