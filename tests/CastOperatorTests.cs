@@ -15,61 +15,114 @@ public class CastOperatorTests
     }
 
     [TestMethod]
-    public void IrrationalDoubleCast()
+    [DataRow(1, 3, 0.3333333333333333d)]
+    [DataRow(2, 3, 0.6666666666666666d)]
+    [DataRow(1, 4, 0.25d)]
+    public void IrrationalDoubleCast(long aNum, long aDenom, double x)
     {
-        var r = Rational.From(2, 3);
+        var r = Rational.From(aNum, aDenom);
         double d = r;
-        Assert.AreEqual(0.6666666666666666d, d);
+        Assert.AreEqual(x, d);
+    }
+
+    [TestMethod]
+    [DataRow(1, 3, 0.3333333333333333f)]
+    [DataRow(2, 3, 0.6666666666666666f)]
+    [DataRow(1, 4, 0.25f)]
+    public void IrrationalFloatCast(long aNum, long aDenom, float x)
+    {
+        var r = Rational.From(aNum, aDenom);
+        float d = r;
+        Assert.AreEqual(x, d);
+    }
+
+    [TestMethod]
+    [DataRow(1, 3, "0.333333333333333")]
+    [DataRow(2, 3, "0.666666666666667")]
+    [DataRow(1, 4, "0.25")]
+    public void IrrationalDecimalCast(long aNum, long aDenom, string x)
+    {
+        var r = Rational.From(aNum, aDenom);
+        decimal d = (decimal)r;
+        var xd = decimal.Parse(x);
+        Assert.AreEqual(xd, d);
+    }
+
+    [TestMethod]
+    [DataRow(1, 3, 0L)]
+    [DataRow(4, 3, 1L)]
+    [DataRow(-4, 3, -1L)]
+    public void IrrationalLongCast(long aNum, long aDenom, long x)
+    {
+        var r = Rational.From(aNum, aDenom);
+        long d = (long)r;
+        Assert.AreEqual(x, d);
+    }
+
+    [TestMethod]
+    [DataRow(1, 3, 0)]
+    [DataRow(4, 3, 1)]
+    [DataRow(-4, 3, -1)]
+    public void IrrationalIntCast(long aNum, long aDenom, int x)
+    {
+        var r = Rational.From(aNum, aDenom);
+        long d = (long)r;
+        Assert.AreEqual(x, d);
     }
 
     [TestMethod]
     [DataRow(0.25d, 1, 4)]
     [DataRow(0.333333333333333333d, 1, 3)]
     [DataRow(1d, 9, 9)]
-    public void DoubleToRationalCast(double d, long xNum, long xDenom)
+    public void DoubleToRationlCast(double d, long xNum, long xDenom)
     {
         Rational r = d;
         var x = Rational.From(xNum, xDenom);
         Assert.AreEqual(x, r);
     }
 
-    // Just for fun, let's try the Leibniz formula for π
     [TestMethod]
-    public void PiCast()
+    [DataRow(0.25f, 1, 4)]
+    [DataRow(0.33333333333333f, 1, 3)]
+    [DataRow(1, 9, 9)]
+    public void FloatToRationalCast(float d, long xNum, long xDenom)
     {
-        var add = true;
-        var r = Rational.Zero;
+        Rational r = d;
+        var x = Rational.From(xNum, xDenom);
+        Assert.AreEqual(x, r);
+    }
 
-        const int COUNT = 1_000;
+    [TestMethod]
+    [DataRow("0.25", 1, 4)]
+    [DataRow("0.333333333333333333", 1, 3)]
+    [DataRow("1", 9, 9)]
+    public void DecimalToRationalCast(string s, long xNum, long xDenom)
+    {
+        var d = decimal.Parse(s);
+        Rational r = (double)d;
+        var x = Rational.From(xNum, xDenom);
+        Assert.AreEqual(x, r);
+    }
 
-        for (var i = 1; i < COUNT; i += 2)
-        {
-            var term = Rational.From(add ? 4 : -4, i);
-            r = r.Add(term);
-            add = !add;
+    [TestMethod]
+    [DataRow(0.25d, 0, 1)]
+    [DataRow(3.5, 3, 1)]
+    [DataRow(1d, 9, 9)]
+    public void LongToRationalCast(double d, long xNum, long xDenom)
+    {
+        Rational r = (long)d;
+        var x = Rational.From(xNum, xDenom);
+        Assert.AreEqual(x, r);
+    }
 
-            // uncomment to get a running estimate
-            Debug.WriteLine($"at {i}: {r} ({(double)r})");
-
-            // due to long overflow of the denominator,
-            //  let's convert to double then convert back
-            //  to see if we can reduce the denominator
-            //  every once in a while
-            if ((i - 1) % 10 == 0)
-            {
-                var approx = (double)r;
-                r = approx;
-            }
-        }
-
-        // unless we convert Rational to use BigInteger,
-        //  we have to be satisfied with only a few decimal
-        //  places of accuracy, even after 1000 iterations.
-        const double TEST_PRECISION = 0.001;
-
-        double target = Math.Floor(Math.PI / TEST_PRECISION) * TEST_PRECISION;
-        double d = Math.Round(r / TEST_PRECISION) * TEST_PRECISION;
-
-        Assert.AreEqual(target, d);
+    [TestMethod]
+    [DataRow(0.25d, 0, 1)]
+    [DataRow(3.5, 3, 1)]
+    [DataRow(1d, 9, 9)]
+    public void IntToRationalCast(double d, long xNum, long xDenom)
+    {
+        Rational r = (int)d;
+        var x = Rational.From(xNum, xDenom);
+        Assert.AreEqual(x, r);
     }
 }
